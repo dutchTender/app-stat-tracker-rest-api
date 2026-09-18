@@ -31,8 +31,8 @@ public abstract class AbstractReadController<T extends BaseEntity> {
         return getService().findAllByExample(example);
     }
 
-    protected final long countInternal() {
-        // InvalidDataAccessApiUsageException dataEx - ResourceNotFoundException
+    protected final long countEntities() {
+
         return getService().count();
     }
 
