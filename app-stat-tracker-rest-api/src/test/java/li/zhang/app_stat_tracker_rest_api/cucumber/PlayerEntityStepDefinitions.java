@@ -1,5 +1,6 @@
 package li.zhang.app_stat_tracker_rest_api.cucumber;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -7,28 +8,27 @@ import li.zhang.app_stat_tracker_rest_api.persistence.dao.PlayerDAO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
+import java.util.Map;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class PlayerEntityStepDefinitions {
 
     private static final Logger log = LoggerFactory.getLogger(PlayerEntityStepDefinitions.class);
-    @Autowired
-    private PlayerDAO playerRepository;
+    private final PlayerDAO playerRepository;
+
+    public PlayerEntityStepDefinitions(PlayerDAO playerRepository) {
+        this.playerRepository = playerRepository;
+    }
 
     @Given("the database is empty")
     public void theDatabaseIsEmpty() {
-        log.info("###################################################");
         playerRepository.deleteAll();
     }
 
     @When("a user saves a new player named {string}")
     public void aUserSavesANewCustomerNamed(String name) {
-
-        log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
         playerRepository.save(new Player(name));
     }
 
@@ -39,4 +39,34 @@ public class PlayerEntityStepDefinitions {
         log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         log.info("cucumber tests completed");
     }
+
+
+    @Given("the registration database is empty")
+    public void clearDatabase() {
+        playerRepository.deleteAll();
+    }
+
+    @When("a client requests registration for {string} with email {string}")
+    public void registerUser(String name, String email) {
+        Map<String, String> requestBody = Map.of("name", name, "email", email);
+
+        log.info("registering user {} with email {}", name, email);
+
+
+    }
+
+    @Then("the response status should be {int}")
+    public void verifyStatusCode(int expectedStatus) {
+        log.info("verifying status code {}", expectedStatus);
+    }
+
+    @And("the player {string} should exist in the system")
+    public void verifyUserPersisted(String expectedName) {
+        boolean userExists = playerRepository.findAll().stream()
+                .anyMatch(player -> player.getUserName().equals(expectedName));
+        log.info("user exists {}", userExists);
+    }
+
+
+
 }
