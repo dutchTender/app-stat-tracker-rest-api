@@ -48,11 +48,8 @@ public class PlayerEntityStepDefinitions {
 
     @When("a client requests registration for {string} with email {string}")
     public void registerUser(String name, String email) {
-        Map<String, String> requestBody = Map.of("name", name, "email", email);
-
+       // Map<String, String> requestBody = Map.of("name", name, "email", email);
         log.info("registering user {} with email {}", name, email);
-
-
     }
 
     @Then("the response status should be {int}")

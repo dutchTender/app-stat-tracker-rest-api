@@ -1,4 +1,4 @@
-package li.zhang.app_stat_tracker_rest_api.config;
+package li.zhang.app_stat_tracker_rest_api.spring.config;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;

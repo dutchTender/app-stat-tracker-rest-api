@@ -1,7 +1,6 @@
 package li.zhang.app_stat_tracker_rest_api.model.base;
 
 import org.springframework.data.domain.Example;
-
 import java.util.List;
 
 public interface BaseOperations <T extends BaseEntity> {
