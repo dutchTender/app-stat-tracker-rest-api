@@ -46,6 +46,8 @@ public class Player implements BaseEntity{
 
     private String phone;
 
+    private String sex;
+
     public String getUserName() {
         return userName;
     }
@@ -84,6 +86,14 @@ public class Player implements BaseEntity{
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     @Override
