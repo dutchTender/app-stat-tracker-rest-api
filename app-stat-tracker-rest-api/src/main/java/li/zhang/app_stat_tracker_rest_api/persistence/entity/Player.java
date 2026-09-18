@@ -18,6 +18,14 @@ public class Player implements BaseEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    public Player(String name) {
+        this.userName = name;
+    }
+
+    public Player() {
+
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -27,39 +35,39 @@ public class Player implements BaseEntity{
     }
 
     @Column(unique = true)
-    private String user_name;
+    private String userName;
 
-    private String first_name;
+    private String firstName;
 
-    private String last_name;
+    private String lastName;
 
     @Column(unique = true)
     private String email;
 
     private String phone;
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -82,11 +90,11 @@ public class Player implements BaseEntity{
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return Objects.equals(id, player.id) && Objects.equals(user_name, player.user_name) && Objects.equals(first_name, player.first_name) && Objects.equals(last_name, player.last_name) && Objects.equals(email, player.email) && Objects.equals(phone, player.phone);
+        return Objects.equals(id, player.id) && Objects.equals(userName, player.userName) && Objects.equals(firstName, player.firstName) && Objects.equals(lastName, player.lastName) && Objects.equals(email, player.email) && Objects.equals(phone, player.phone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user_name, first_name, last_name, email, phone);
+        return Objects.hash(id, userName, firstName, lastName, email, phone);
     }
 }

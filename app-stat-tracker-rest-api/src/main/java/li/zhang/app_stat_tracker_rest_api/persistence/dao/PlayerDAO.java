@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface PlayerDAO extends JpaRepository<Player, Long> , QueryByExampleExecutor<Player> {
     Optional<Player> findPlayerById(Long id);
 
+    Optional<Player> findPlayerByUserName(String name);
 
 }
