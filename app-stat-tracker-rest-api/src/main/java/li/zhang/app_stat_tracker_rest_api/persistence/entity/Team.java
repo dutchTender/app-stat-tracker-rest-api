@@ -12,14 +12,12 @@ public class Team implements BaseEntity {
 
     @Override
     public Long getId() {
-        return 0L;
+        return id;
     }
 
     @Override
     public void setId(Long id) {
-
+        this.id = id;
     }
-
-
 }
 
