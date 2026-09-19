@@ -2,12 +2,17 @@ package li.zhang.app_stat_tracker_rest_api.persistence.entity;
 
 import jakarta.persistence.*;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Objects;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "Team")
+@Getter
+@Setter
 public class Team implements BaseEntity {
     @Id
     private Long id;
@@ -28,39 +33,27 @@ public class Team implements BaseEntity {
 
     public String teamSponsors;
 
-    @OneToMany(mappedBy = "teams")
-    public Set<Player> players;
+    @OneToMany(mappedBy = "homeTeam")
+    private Set<Game> homeGames;
 
-    public Set<Player> getPlayers() {
-        return players;
+
+    @OneToMany(mappedBy = "awayTeam")
+    private Set<Game> awayGames;
+
+
+    @OneToMany(mappedBy = "team")
+    private Set<Player> players;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(id, team.id) && Objects.equals(teamName, team.teamName) && Objects.equals(teamCoachName, team.teamCoachName) && Objects.equals(teamSponsors, team.teamSponsors) && Objects.equals(homeGames, team.homeGames) && Objects.equals(awayGames, team.awayGames) && Objects.equals(players, team.players);
     }
 
-    public void setPlayers(Set<Player> players) {
-        this.players = players;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public String getTeamCoachName() {
-        return teamCoachName;
-    }
-
-    public void setTeamCoachName(String teamCoachName) {
-        this.teamCoachName = teamCoachName;
-    }
-
-    public String getTeamSponsors() {
-        return teamSponsors;
-    }
-
-    public void setTeamSponsors(String teamSponsors) {
-        this.teamSponsors = teamSponsors;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, teamName, teamCoachName, teamSponsors, homeGames, awayGames, players);
     }
 }
 

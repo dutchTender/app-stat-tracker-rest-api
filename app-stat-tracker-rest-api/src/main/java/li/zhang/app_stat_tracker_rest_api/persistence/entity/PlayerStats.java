@@ -1,19 +1,17 @@
 package li.zhang.app_stat_tracker_rest_api.persistence.entity;
+
+
 import jakarta.persistence.*;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Objects;
-import java.util.Set;
-
 
 @Entity
-@Table(name = "Game")
 @Getter
 @Setter
-public class Game implements BaseEntity {
-
+public class PlayerStats implements  BaseEntity {
     @Id
     private Long id;
 
@@ -26,30 +24,21 @@ public class Game implements BaseEntity {
     public void setId(Long id) {
         this.id = id;
     }
-    public String gameTime;
-
-    public String gameLocation;
-
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
-    public Team homeTeam;
-
+    public Player player;
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
-    public Team awayTeam;
-
-    @OneToMany(mappedBy = "game")
-    private Set<PlayerStats> gameStats;
+    public Game game;
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Game game = (Game) o;
-        return Objects.equals(id, game.id) && Objects.equals(gameTime, game.gameTime) && Objects.equals(gameLocation, game.gameLocation) && Objects.equals(homeTeam, game.homeTeam) && Objects.equals(awayTeam, game.awayTeam);
+        PlayerStats that = (PlayerStats) o;
+        return Objects.equals(id, that.id) && Objects.equals(player, that.player) && Objects.equals(game, that.game);
     }
-
     @Override
     public int hashCode() {
-        return Objects.hash(id, gameTime, gameLocation, homeTeam, awayTeam);
+        return Objects.hash(id, player, game);
     }
 }
