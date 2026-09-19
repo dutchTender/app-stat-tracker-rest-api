@@ -8,6 +8,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -42,8 +43,9 @@ public class SecurityConfig {
                         .build()
         );
     }
-/*
+
     @Bean
+    @Profile("PROD")
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -55,15 +57,17 @@ public class SecurityConfig {
                 .build();
     }
 
- */
+
     @Bean
+    @Profile("DEV")
     public WebSecurityCustomizer webSecurityCustomizer() {
         // Keeps Spring Filters completely away from the H2 console endpoints
-        return (web) -> web.ignoring().requestMatchers("/h2-console/**");
+        return web -> web.ignoring().requestMatchers("/h2-console/**");
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Profile("DEV")
+    public SecurityFilterChain securityFilterChainDev(HttpSecurity http) throws Exception {
         http
                 // Disable CSRF for non-browser clients (Postman/REST API tools)
                 .csrf(csrf -> csrf.disable())
