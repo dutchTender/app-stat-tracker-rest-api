@@ -12,7 +12,7 @@ import li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
 import li.zhang.app_stat_tracker_rest_api.persistence.mapper.PlayerMapper;
 import li.zhang.app_stat_tracker_rest_api.services.PlayerService;
-import li.zhang.app_stat_tracker_rest_api.utils.RestResponseMessage;
+import li.zhang.app_stat_tracker_rest_api.utils.constants.RestResponseMessage;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

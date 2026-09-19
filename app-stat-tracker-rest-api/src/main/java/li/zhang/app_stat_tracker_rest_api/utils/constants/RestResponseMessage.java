@@ -1,4 +1,4 @@
-package li.zhang.app_stat_tracker_rest_api.utils;
+package li.zhang.app_stat_tracker_rest_api.utils.constants;
 
 
 public class RestResponseMessage{
