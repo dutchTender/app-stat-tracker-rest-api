@@ -8,7 +8,6 @@ import li.zhang.app_stat_tracker_rest_api.persistence.dao.PlayerDAO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Map;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -36,7 +35,6 @@ public class PlayerEntityStepDefinitions {
     public void aCustomerNamedShouldExistInTheDatabase(String name) {
         Optional<Player> customer = playerRepository.findPlayerByUserName(name);
         assertTrue(customer.isPresent(), "Customer should be found in the database");
-        log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
         log.info("cucumber tests completed");
     }
 
@@ -48,7 +46,6 @@ public class PlayerEntityStepDefinitions {
 
     @When("a client requests registration for {string} with email {string}")
     public void registerUser(String name, String email) {
-       // Map<String, String> requestBody = Map.of("name", name, "email", email);
         log.info("registering user {} with email {}", name, email);
     }
 

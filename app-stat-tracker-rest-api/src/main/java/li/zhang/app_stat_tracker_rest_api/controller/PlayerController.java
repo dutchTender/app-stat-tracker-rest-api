@@ -35,7 +35,6 @@ public class PlayerController extends AbstractController<Player> {
     private final AbstractAPIResponse<PlayerDTO> apiResponseSingleton = new AbstractAPIResponse<>();
 
     public PlayerController(PlayerService service, PlayerMapper mapper) {
-
         this.service = service;
         this.mapper = mapper;
     }
@@ -53,14 +52,14 @@ public class PlayerController extends AbstractController<Player> {
                                                                                      @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         Page<Player> playersResultPage = this.service.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total players : "+playersResultPage.getTotalPages()*playersResultPage.getContent().size());
-        return apiResponseCollection.createAPIResponse( mapper.toDTOList(playersResultPage.getContent()) , metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
+        return apiResponseCollection.createAPIResponse(mapper.toDTOList(playersResultPage.getContent()) , metaData, RestResponseMessage.USERS_GET_SUCCESS, RestParams.API_STATUS_OK);
     }
 
     @GetMapping()
-    public ResponseEntity<AbstractRestResponse<List<PlayerDTO>>>   findAllPlayers(final HttpServletRequest request) {
+    public ResponseEntity<AbstractRestResponse<List<PlayerDTO>>> findAllPlayers(final HttpServletRequest request) {
         List<Player> playersResultList = this.service.findAll();
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: find all - no params");
-        return apiResponseCollection.createAPIResponse( mapper.toDTOList(playersResultList) , metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
+        return apiResponseCollection.createAPIResponse(mapper.toDTOList(playersResultList) , metaData, RestResponseMessage.USERS_GET_SUCCESS, RestParams.API_STATUS_OK);
     }
 
 
@@ -68,7 +67,7 @@ public class PlayerController extends AbstractController<Player> {
     public ResponseEntity<AbstractRestResponse<PlayerDTO>> findOnePlayer(@PathVariable("id") final Long id) {
         Player playerResult = service.find(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: find one by id");
-        return apiResponseSingleton.createAPIResponse( mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_GET_SUCCESS, "Success");
+        return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_GET_SUCCESS, RestParams.API_STATUS_OK);
     }
 
     @PostMapping()
