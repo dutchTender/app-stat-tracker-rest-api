@@ -12,6 +12,7 @@ import li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
 import li.zhang.app_stat_tracker_rest_api.persistence.mapper.PlayerMapper;
 import li.zhang.app_stat_tracker_rest_api.services.PlayerService;
+import li.zhang.app_stat_tracker_rest_api.utils.constants.RestParams;
 import li.zhang.app_stat_tracker_rest_api.utils.constants.RestResponseMessage;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -50,20 +51,24 @@ public class PlayerController extends AbstractController<Player> {
                                                                                      @RequestParam(value = QueryConstants.SIZE) final int size,
                                                                                      @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                                                      @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
-        Page <Player> playersResultPage = this.service.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
-        AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8080/players/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total players : "+playersResultPage.getTotalPages()*playersResultPage.getContent().size());
+        Page<Player> playersResultPage = this.service.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
+        AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total players : "+playersResultPage.getTotalPages()*playersResultPage.getContent().size());
         return apiResponseCollection.createAPIResponse( mapper.toDTOList(playersResultPage.getContent()) , metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
     }
 
     @GetMapping()
-    public ResponseEntity<List<PlayerDTO>>  findAllPlayers(final HttpServletRequest request) {
-        return ResponseEntity.of(Optional.ofNullable(mapper.toDTOList(this.service.findAll())));
+    public ResponseEntity<AbstractRestResponse<List<PlayerDTO>>>   findAllPlayers(final HttpServletRequest request) {
+        List<Player> playersResultList = this.service.findAll();
+        AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: find all - no params");
+        return apiResponseCollection.createAPIResponse( mapper.toDTOList(playersResultList) , metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
     }
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PlayerDTO> findOnePlayer(@PathVariable("id") final Long id) {
-        return ResponseEntity.of(Optional.ofNullable(mapper.toDTO(service.find(id))));
+    public ResponseEntity<AbstractRestResponse<PlayerDTO>> findOnePlayer(@PathVariable("id") final Long id) {
+        Player playerResult = service.find(id);
+        AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: find one by id");
+        return apiResponseSingleton.createAPIResponse( mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_GET_SUCCESS, "Success");
     }
 
     @PostMapping()
