@@ -13,9 +13,12 @@ public class PlayerController extends AbstractController<Player> {
 
     private final PlayerService service;
 
-    public PlayerController( PlayerService service) {
+    public PlayerController( PlayerService service ) {
         this.service = service;
     }
+
+
+
 
     @Override
     protected BaseService<Player> getService() {

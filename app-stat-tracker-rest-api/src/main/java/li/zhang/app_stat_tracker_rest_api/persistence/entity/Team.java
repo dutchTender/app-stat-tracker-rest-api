@@ -36,7 +36,6 @@ public class Team implements BaseEntity {
     @OneToMany(mappedBy = "homeTeam")
     private Set<Game> homeGames;
 
-
     @OneToMany(mappedBy = "awayTeam")
     private Set<Game> awayGames;
 

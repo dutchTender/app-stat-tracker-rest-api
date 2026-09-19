@@ -1,6 +1,5 @@
 package li.zhang.app_stat_tracker_rest_api.model.abs;
 
-import jakarta.servlet.http.HttpServletRequest;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseEntity;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseService;
 import org.springframework.data.domain.Example;
