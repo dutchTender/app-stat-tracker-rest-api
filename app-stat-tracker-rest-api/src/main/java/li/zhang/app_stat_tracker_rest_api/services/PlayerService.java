@@ -3,18 +3,17 @@ package li.zhang.app_stat_tracker_rest_api.services;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseService;
 import li.zhang.app_stat_tracker_rest_api.persistence.dao.PlayerDAO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 @Service
 public class PlayerService implements BaseService<Player> {
 
 
     private final PlayerDAO playerDAO;
-    private static final Logger logger = Logger.getLogger(PlayerService.class.getName());
 
 
     public PlayerService(PlayerDAO playerDAO) {
@@ -47,8 +46,12 @@ public class PlayerService implements BaseService<Player> {
     }
 
     @Override
-    public List<Player> findAllPaginatedAndSorted(int page, int size, String sortBy, String sortOrder) {
-        return this.playerDAO.findAll(Sort.by(sortBy, sortOrder));
+    public Page<Player> findAllPaginatedAndSorted(int page, int size, String sortBy, String sortOrder) {
+        Sort.Direction direction = Sort.Direction.fromString(sortOrder);
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        this.getLogger().log(Level.INFO, "findAllPaginatedAndSorted() params : - {}", pageable);
+        return this.playerDAO.findAll(pageable);
     }
 
     @Override

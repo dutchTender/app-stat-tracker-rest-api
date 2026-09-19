@@ -1,6 +1,8 @@
 package li.zhang.app_stat_tracker_rest_api.model.base;
 
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 
 public interface BaseOperations <T extends BaseEntity> {
@@ -13,7 +15,7 @@ public interface BaseOperations <T extends BaseEntity> {
 
     List<T> findAllByExample(final Example<T> example);
 
-    List<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder);
+    Page<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder);
 
     T create(final T entity);
 
