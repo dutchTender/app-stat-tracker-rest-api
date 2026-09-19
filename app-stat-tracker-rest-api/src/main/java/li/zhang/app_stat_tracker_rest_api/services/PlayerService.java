@@ -14,7 +14,7 @@ public class PlayerService implements BaseService<Player> {
 
 
     private final PlayerDAO playerDAO;
-
+    private static final Logger logger = Logger.getLogger(PlayerService.class.getName());
 
     public PlayerService(PlayerDAO playerDAO) {
         this.playerDAO = playerDAO;
@@ -22,7 +22,7 @@ public class PlayerService implements BaseService<Player> {
 
     @Override
     public Logger getLogger() {
-        return null;
+        return logger;
     }
 
     @Override
