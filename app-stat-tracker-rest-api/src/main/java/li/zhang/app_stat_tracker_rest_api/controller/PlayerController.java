@@ -72,20 +72,26 @@ public class PlayerController extends AbstractController<Player> {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<PlayerDTO> createPlayer(@RequestBody @Valid final PlayerDTO dto) {
-        return ResponseEntity.of(Optional.ofNullable(mapper.toDTO(this.service.create(mapper.toEntity(dto)))));
+    public ResponseEntity<AbstractRestResponse<PlayerDTO>> createPlayer(@RequestBody @Valid final PlayerDTO dto) {
+        Player playerResult = service.create(mapper.toEntity(dto));
+        AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: create player");
+        return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_CREATE_SUCCESS, RestParams.API_STATUS_OK);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable("id") final Long id, @RequestBody @Valid PlayerDTO dto) {
-        return ResponseEntity.of(Optional.ofNullable(mapper.toDTO(service.update(mapper.toEntity(dto)))));
+    public ResponseEntity<AbstractRestResponse<PlayerDTO>> updatePlayer(@PathVariable("id") final Long id, @RequestBody @Valid PlayerDTO dto) {
+        Player playerResult = service.update(mapper.toEntity(dto));
+        AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: update player");
+        return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_UPDATE_SUCCESS, RestParams.API_STATUS_OK);
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") final Long id) {
-           this.service.deleteById(id);
+    public ResponseEntity<AbstractRestResponse<PlayerDTO>> delete(@PathVariable("id") final Long id) {
+        this.service.deleteById(id);
+        AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: delete player");
+        return apiResponseSingleton.createAPIResponse(null , metaData, RestResponseMessage.USER_DELETE_SUCCESS, RestParams.API_STATUS_OK);
     }
 
 }
