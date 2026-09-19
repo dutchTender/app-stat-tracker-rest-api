@@ -52,7 +52,7 @@ public class PlayerController extends AbstractController<Player> {
                                                                                      @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         Page <Player> playerPage = this.service.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData("http://localhost:8080/players/", "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total players : "+playerPage.getTotalPages()*playerPage.getSize());
-        return apiResponseCollection.createAPIResponse( mapper.toDTOList(playerPage), metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
+        return apiResponseCollection.createAPIResponse( mapper.toDTOList(playerPage.getContent()) , metaData, RestResponseMessage.USERS_GET_SUCCESS, "Success");
     }
 
     @GetMapping()
