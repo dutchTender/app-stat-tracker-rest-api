@@ -107,4 +107,15 @@ public class Player implements BaseEntity{
     public int hashCode() {
         return Objects.hash(id, userName, firstName, lastName, email, phone);
     }
+
+    @ManyToOne(optional = true, fetch = FetchType.EAGER)
+    private Team teams;
+
+    public Team getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Team teams) {
+        this.teams = teams;
+    }
 }

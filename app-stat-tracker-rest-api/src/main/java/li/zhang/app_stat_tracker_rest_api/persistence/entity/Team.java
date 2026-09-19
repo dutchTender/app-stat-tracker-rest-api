@@ -3,7 +3,6 @@ package li.zhang.app_stat_tracker_rest_api.persistence.entity;
 import jakarta.persistence.*;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseEntity;
 
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -23,35 +22,45 @@ public class Team implements BaseEntity {
         this.id = id;
     }
 
-    @OneToMany(
-            mappedBy = "homeTeam",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private Set<Game> homeGames = new HashSet<>();
+    public String teamName;
 
+    public String teamCoachName;
 
-    @OneToMany(
-            mappedBy = "awayTeam",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private Set<Game> awayGames = new HashSet<>();
+    public String teamSponsors;
 
-    public Set<Game> getHomeGames() {
-        return homeGames;
+    @OneToMany(mappedBy = "teams")
+    public Set<Player> players;
+
+    public Set<Player> getPlayers() {
+        return players;
     }
 
-    public void setHomeGames(Set<Game> homeGames) {
-        this.homeGames = homeGames;
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
     }
 
-    public Set<Game> getAwayGames() {
-        return awayGames;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setAwayGames(Set<Game> awayGames) {
-        this.awayGames = awayGames;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public String getTeamCoachName() {
+        return teamCoachName;
+    }
+
+    public void setTeamCoachName(String teamCoachName) {
+        this.teamCoachName = teamCoachName;
+    }
+
+    public String getTeamSponsors() {
+        return teamSponsors;
+    }
+
+    public void setTeamSponsors(String teamSponsors) {
+        this.teamSponsors = teamSponsors;
     }
 }
 
