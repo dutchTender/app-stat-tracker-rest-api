@@ -5,10 +5,12 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
@@ -40,17 +42,37 @@ public class SecurityConfig {
                         .build()
         );
     }
-
+/*
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder jwtDecoder) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests.anyRequest().authenticated())
+                        authorizeRequests.requestMatchers(PathRequest.toH2Console()).permitAll().anyRequest().authenticated())
                 .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer -> httpSecurityOAuth2ResourceServerConfigurer.jwt(jwt -> jwt.decoder(jwtDecoder)))
                 .sessionManagement(sessionManagement ->sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(withDefaults())
                 .build();
+    }
+
+ */
+@Bean
+public WebSecurityCustomizer webSecurityCustomizer() {
+    // Keeps Spring Filters completely away from the H2 console endpoints
+    return (web) -> web.ignoring().requestMatchers("/h2-console/**");
+}
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                // Disable CSRF for non-browser clients (Postman/REST API tools)
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        // Allows all requests to pass through without authentication
+                        .anyRequest().permitAll()
+                );
+
+        return http.build();
     }
 
     @Bean
