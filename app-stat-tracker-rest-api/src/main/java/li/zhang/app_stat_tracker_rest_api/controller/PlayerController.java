@@ -1,5 +1,6 @@
 package li.zhang.app_stat_tracker_rest_api.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import li.zhang.app_stat_tracker_rest_api.model.abs.AbstractController;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseService;
 import li.zhang.app_stat_tracker_rest_api.model.constants.QueryConstants;
@@ -8,6 +9,8 @@ import li.zhang.app_stat_tracker_rest_api.services.PlayerService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 
@@ -28,17 +31,18 @@ public class PlayerController extends AbstractController<Player> {
         return service;
     }
 
-
     @GetMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY })
     public ResponseEntity<Page<Player>> findAllPaginatedAndSortedDTO(@RequestParam(value = QueryConstants.PAGE) final int page,
                                                                      @RequestParam(value = QueryConstants.SIZE) final int size,
                                                                      @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
                                                                      @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         return ResponseEntity.of(Optional.ofNullable(this.service.findAllPaginatedAndSorted(page, size, sortBy, sortOrder)));
-
     }
 
-
+    @GetMapping()
+    public ResponseEntity<List<Player>>  findAllPlayers(final HttpServletRequest request) {
+        return ResponseEntity.of(Optional.ofNullable(this.service.findAll()));
+    }
 
 
 
