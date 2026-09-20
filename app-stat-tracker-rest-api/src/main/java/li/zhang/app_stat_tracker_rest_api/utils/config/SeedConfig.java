@@ -10,8 +10,6 @@ public class SeedConfig {
 
     @Bean
     CommandLineRunner initializeData(SeedService dataSeederService) {
-        return args -> {
-            dataSeederService.seedDB();
-        };
+        return args -> dataSeederService.seedDB();
     }
 }
