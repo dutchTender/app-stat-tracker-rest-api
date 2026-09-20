@@ -1,5 +1,7 @@
 package li.zhang.app_stat_tracker_rest_api.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseEntity;
 import lombok.Getter;
@@ -10,12 +12,18 @@ import java.util.Set;
 
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Team")
 @Getter
 @Setter
 public class Team implements BaseEntity {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    public Team() {
+    }
 
     @Override
     public Long getId() {
@@ -25,6 +33,10 @@ public class Team implements BaseEntity {
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Team(String teamName) {
+        this.teamName = teamName;
     }
 
     public String teamName;

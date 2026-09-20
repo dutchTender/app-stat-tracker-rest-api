@@ -21,7 +21,7 @@ public class PlayerEntityStepDefinitions {
         this.playerRepository = playerRepository;
     }
 
-    @Given("the database is empty")
+    @Given("the player database is empty")
     public void theDatabaseIsEmpty() {
         playerRepository.deleteAll();
     }
