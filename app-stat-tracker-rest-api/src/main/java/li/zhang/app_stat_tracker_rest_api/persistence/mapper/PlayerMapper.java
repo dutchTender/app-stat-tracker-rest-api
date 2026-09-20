@@ -1,15 +1,12 @@
 package li.zhang.app_stat_tracker_rest_api.persistence.mapper;
 
+import li.zhang.app_stat_tracker_rest_api.model.base.BaseDTOMapper;
 import  li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerDTO;
 import  li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
-import java.util.List;
+
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface PlayerMapper {
-    PlayerDTO toDTO(Player player);
-    Player toEntity(PlayerDTO dto);
-    List<PlayerDTO> toDTOList(List<Player> players);
-    List<Player> toEntityList(List<PlayerDTO> playerDTOs);
+public interface PlayerMapper extends BaseDTOMapper<Player, PlayerDTO> {
 }
