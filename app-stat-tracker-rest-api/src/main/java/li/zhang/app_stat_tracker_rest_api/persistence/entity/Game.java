@@ -26,8 +26,8 @@ public class Game implements BaseEntity {
     public void setId(Long id) {
         this.id = id;
     }
+    public String gameType;
     public String gameTime;
-
     public String gameLocation;
 
 

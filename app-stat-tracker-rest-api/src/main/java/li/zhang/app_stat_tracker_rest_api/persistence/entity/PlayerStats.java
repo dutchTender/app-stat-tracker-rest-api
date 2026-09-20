@@ -31,6 +31,8 @@ public class PlayerStats implements  BaseEntity {
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
     public Game game;
 
+    public String gameStats;
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
