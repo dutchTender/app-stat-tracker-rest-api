@@ -1,6 +1,6 @@
 package li.zhang.app_stat_tracker_rest_api.utils.config;
 
-import li.zhang.app_stat_tracker_rest_api.services.SeedService;
+import li.zhang.app_stat_tracker_rest_api.services.util.SeedService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

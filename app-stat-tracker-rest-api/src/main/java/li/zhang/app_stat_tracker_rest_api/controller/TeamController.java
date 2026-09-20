@@ -11,7 +11,7 @@ import li.zhang.app_stat_tracker_rest_api.model.constants.QueryConstants;
 import li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Team;
 import li.zhang.app_stat_tracker_rest_api.persistence.mapper.TeamMapper;
-import li.zhang.app_stat_tracker_rest_api.services.TeamService;
+import li.zhang.app_stat_tracker_rest_api.services.core.TeamService;
 import li.zhang.app_stat_tracker_rest_api.utils.constants.RestParams;
 import li.zhang.app_stat_tracker_rest_api.utils.constants.RestResponseMessage;
 import org.springframework.data.domain.Page;

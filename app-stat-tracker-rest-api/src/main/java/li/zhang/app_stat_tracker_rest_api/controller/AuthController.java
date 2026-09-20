@@ -1,6 +1,6 @@
 package li.zhang.app_stat_tracker_rest_api.controller;
 
-import li.zhang.app_stat_tracker_rest_api.services.TokenService;
+import li.zhang.app_stat_tracker_rest_api.services.util.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;

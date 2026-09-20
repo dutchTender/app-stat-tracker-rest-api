@@ -1,4 +1,4 @@
-package li.zhang.app_stat_tracker_rest_api.services;
+package li.zhang.app_stat_tracker_rest_api.services.util;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

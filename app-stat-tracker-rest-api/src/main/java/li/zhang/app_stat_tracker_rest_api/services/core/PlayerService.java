@@ -1,4 +1,4 @@
-package li.zhang.app_stat_tracker_rest_api.services;
+package li.zhang.app_stat_tracker_rest_api.services.core;
 
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseService;
 import li.zhang.app_stat_tracker_rest_api.persistence.dao.PlayerDAO;
