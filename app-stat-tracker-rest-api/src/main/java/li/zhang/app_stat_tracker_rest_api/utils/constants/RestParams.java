@@ -9,6 +9,6 @@ public class RestParams {
     public static final String API_CLIENT_URL = "http://localhost:4200";
     public static final String API_STATUS_OK = "200";
     public static final String PLAYER_ENTITY_PATH = "/players";
-
+    public static final String TEAM_ENTITY_PATH = "/teams";
 
 }

@@ -4,11 +4,14 @@ import li.zhang.app_stat_tracker_rest_api.model.base.BaseService;
 import li.zhang.app_stat_tracker_rest_api.persistence.dao.TeamDAO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Team;
 import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+@Service
 public class TeamService implements BaseService<Team> {
 
     private final TeamDAO teamRepository;

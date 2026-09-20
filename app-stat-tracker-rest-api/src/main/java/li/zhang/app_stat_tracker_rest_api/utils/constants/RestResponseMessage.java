@@ -18,5 +18,12 @@ public class RestResponseMessage{
     public static final String PLAYER_DELETE_SUCCESS = "PLAYER deleted successfully";
     public static final String PLAYER_GET_SUCCESS = "PLAYER retrieved successfully";
     public static final String PLAYERS_GET_SUCCESS = "PLAYERS retrieved successfully";
+
+
+    public static final String TEAM_CREATE_SUCCESS = "New TEAM created successfully";
+    public static final String TEAM_UPDATE_SUCCESS = "TEAM update successfully";
+    public static final String TEAM_DELETE_SUCCESS = "TEAM deleted successfully";
+    public static final String TEAM_GET_SUCCESS = "TEAM retrieved successfully";
+    public static final String TEAMS_GET_SUCCESS = "TEAM retrieved successfully";
 }
 
