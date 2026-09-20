@@ -65,7 +65,7 @@ public class PlayerController extends AbstractController<Player> {
     public ResponseEntity<AbstractRestResponse<PlayerDTO>> findOnePlayer(@PathVariable("id") final Long id) {
         Player playerResult = service.find(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: find one by id");
-        return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_GET_SUCCESS, RestParams.API_STATUS_OK);
+        return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_GET_SUCCESS,RestParams.API_STATUS_OK);
     }
 
     @PostMapping()
@@ -73,7 +73,7 @@ public class PlayerController extends AbstractController<Player> {
     public ResponseEntity<AbstractRestResponse<PlayerDTO>> createPlayer(@RequestBody @Valid final PlayerDTO dto) {
         Player playerResult = service.create(mapper.toEntity(dto));
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: create player");
-        return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_CREATE_SUCCESS, RestParams.API_STATUS_OK);
+        return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_CREATE_SUCCESS,String.valueOf(HttpStatus.CREATED));
     }
 
     @PutMapping(value = "/{id}")
@@ -81,7 +81,7 @@ public class PlayerController extends AbstractController<Player> {
     public ResponseEntity<AbstractRestResponse<PlayerDTO>> updatePlayer(@PathVariable("id") final Long id, @RequestBody @Valid PlayerDTO dto) {
         Player playerResult = service.update(mapper.toEntity(dto));
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: update player");
-        return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_UPDATE_SUCCESS, RestParams.API_STATUS_OK);
+        return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.USER_UPDATE_SUCCESS, String.valueOf(HttpStatus.OK));
     }
 
     @DeleteMapping(value = "/{id}")
@@ -89,7 +89,7 @@ public class PlayerController extends AbstractController<Player> {
     public ResponseEntity<AbstractRestResponse<PlayerDTO>> delete(@PathVariable("id") final Long id) {
         this.service.deleteById(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_Base_URL+RestParams.PLAYER_ENTITY_PATH, "params: delete player");
-        return apiResponseSingleton.createAPIResponse(null , metaData, RestResponseMessage.USER_DELETE_SUCCESS, RestParams.API_STATUS_OK);
+        return apiResponseSingleton.createAPIResponse(null , metaData, RestResponseMessage.USER_DELETE_SUCCESS, String.valueOf(HttpStatus.NO_CONTENT));
     }
 
 }
