@@ -1,13 +1,14 @@
 package li.zhang.app_stat_tracker_rest_api.service.core;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
-import li.zhang.app_stat_tracker_rest_api.persistence.dao.PlayerDAO;
-import li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
-import li.zhang.app_stat_tracker_rest_api.services.core.PlayerService;
+import li.zhang.app_stat_tracker_rest_api.persistence.dao.TeamDAO;
+import li.zhang.app_stat_tracker_rest_api.persistence.entity.Team;
 
+import li.zhang.app_stat_tracker_rest_api.services.core.TeamService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,26 +16,26 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class PlayerServiceTest {
+class TeamServiceTest {
 
     @Mock
-    private PlayerDAO repository;
+    private TeamDAO repository;
 
     @InjectMocks
-    private PlayerService service;
+    private TeamService service;
 
 
     @Test
     void getById_ShouldReturnEntity_WhenEntityExists() {
         // Arrange
         Long entityId = 1L;
-        Player mockEntity = new Player("Alice");
+        Team mockEntity = new Team("Alice");
         mockEntity.setId(entityId);
-        when(repository.findPlayerById(entityId)).thenReturn(Optional.of(mockEntity));
-        Player result = service.find(entityId);
+        when(repository.findTeamById(entityId)).thenReturn(Optional.of(mockEntity));
+        Team result = service.find(entityId);
         assertNotNull(result);
-        assertEquals("Alice", result.getUserName());
-
-        verify(repository, times(2)).findPlayerById(entityId);
+        assertEquals("Alice", result.getTeamName());
+        verify(repository, times(2)).findTeamById(entityId);
     }
 }
+
