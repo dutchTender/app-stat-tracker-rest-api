@@ -8,7 +8,7 @@ import li.zhang.app_stat_tracker_rest_api.model.abs.AbstractRestMetaData;
 import li.zhang.app_stat_tracker_rest_api.model.abs.AbstractRestResponse;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseService;
 import li.zhang.app_stat_tracker_rest_api.model.constants.QueryConstants;
-import li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerPlayerDTO;
+import li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerViewPlayerDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
 import li.zhang.app_stat_tracker_rest_api.persistence.mapper.PlayerMapper;
 import li.zhang.app_stat_tracker_rest_api.services.core.PlayerService;
@@ -29,8 +29,8 @@ public class PlayerController extends AbstractController<Player> {
 
     private final PlayerService service;
     private final PlayerMapper mapper;
-    private final AbstractAPIResponse<List<PlayerPlayerDTO>> apiResponseCollection = new AbstractAPIResponse<>();
-    private final AbstractAPIResponse<PlayerPlayerDTO> apiResponseSingleton = new AbstractAPIResponse<>();
+    private final AbstractAPIResponse<List<PlayerViewPlayerDTO>> apiResponseCollection = new AbstractAPIResponse<>();
+    private final AbstractAPIResponse<PlayerViewPlayerDTO> apiResponseSingleton = new AbstractAPIResponse<>();
 
     public PlayerController(PlayerService service, PlayerMapper mapper) {
         this.service = service;
@@ -44,17 +44,17 @@ public class PlayerController extends AbstractController<Player> {
 
     @GetMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY })
     public
-    ResponseEntity<AbstractRestResponse<List<PlayerPlayerDTO>>> findAllPlayersPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page,
-                                                                                           @RequestParam(value = QueryConstants.SIZE) final int size,
-                                                                                           @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
-                                                                                           @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+    ResponseEntity<AbstractRestResponse<List<PlayerViewPlayerDTO>>> findAllPlayersPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page,
+                                                                                                     @RequestParam(value = QueryConstants.SIZE) final int size,
+                                                                                                     @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+                                                                                                     @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         Page<Player> playersResultPage = this.service.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.PLAYER_ENTITY_PATH, "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total players : "+playersResultPage.getTotalPages()*playersResultPage.getContent().size());
         return apiResponseCollection.createAPIResponse(mapper.toDTOList(playersResultPage.getContent()) , metaData, RestResponseMessage.PLAYERS_GET_SUCCESS, RestParams.API_STATUS_OK);
     }
 
     @GetMapping()
-    public ResponseEntity<AbstractRestResponse<List<PlayerPlayerDTO>>> findAllPlayers(final HttpServletRequest request) {
+    public ResponseEntity<AbstractRestResponse<List<PlayerViewPlayerDTO>>> findAllPlayers(final HttpServletRequest request) {
         List<Player> playersResultList = this.service.findAll();
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.PLAYER_ENTITY_PATH, "params: find all PLAYER - count : "+playersResultList.size());
         return apiResponseCollection.createAPIResponse(mapper.toDTOList(playersResultList) , metaData, RestResponseMessage.PLAYERS_GET_SUCCESS, RestParams.API_STATUS_OK);
@@ -62,7 +62,7 @@ public class PlayerController extends AbstractController<Player> {
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AbstractRestResponse<PlayerPlayerDTO>> findOnePlayer(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<PlayerViewPlayerDTO>> findOnePlayer(@PathVariable("id") final Long id) {
         Player playerResult = service.find(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.PLAYER_ENTITY_PATH, "params: find one PLAYER - count : 1 ");
         return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.PLAYER_GET_SUCCESS,RestParams.API_STATUS_OK);
@@ -70,7 +70,7 @@ public class PlayerController extends AbstractController<Player> {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<AbstractRestResponse<PlayerPlayerDTO>> createPlayer(@RequestBody @Valid final PlayerPlayerDTO dto) {
+    public ResponseEntity<AbstractRestResponse<PlayerViewPlayerDTO>> createPlayer(@RequestBody @Valid final PlayerViewPlayerDTO dto) {
         Player playerResult = service.create(mapper.toEntity(dto));
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.PLAYER_ENTITY_PATH, "params: create PLAYER - count : 1  ");
         return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.PLAYER_CREATE_SUCCESS,String.valueOf(HttpStatus.CREATED));
@@ -78,7 +78,7 @@ public class PlayerController extends AbstractController<Player> {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AbstractRestResponse<PlayerPlayerDTO>> updatePlayer(@PathVariable("id") final Long id, @RequestBody @Valid PlayerPlayerDTO dto) {
+    public ResponseEntity<AbstractRestResponse<PlayerViewPlayerDTO>> updatePlayer(@PathVariable("id") final Long id, @RequestBody @Valid PlayerViewPlayerDTO dto) {
         Player playerResult = service.update(mapper.toEntity(dto));
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.PLAYER_ENTITY_PATH, "params: update PLAYER - count : 1  ");
         return apiResponseSingleton.createAPIResponse(mapper.toDTO(playerResult) , metaData, RestResponseMessage.PLAYER_UPDATE_SUCCESS, String.valueOf(HttpStatus.OK));
@@ -86,7 +86,7 @@ public class PlayerController extends AbstractController<Player> {
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<AbstractRestResponse<PlayerPlayerDTO>> delete(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<PlayerViewPlayerDTO>> delete(@PathVariable("id") final Long id) {
         this.service.deleteById(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.PLAYER_ENTITY_PATH, "params: delete PLAYER - count : 1  ");
         return apiResponseSingleton.createAPIResponse(null , metaData, RestResponseMessage.PLAYER_DELETE_SUCCESS, String.valueOf(HttpStatus.NO_CONTENT));

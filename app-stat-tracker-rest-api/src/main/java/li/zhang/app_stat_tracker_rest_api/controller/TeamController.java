@@ -9,7 +9,7 @@ import li.zhang.app_stat_tracker_rest_api.model.abs.AbstractRestResponse;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseService;
 import li.zhang.app_stat_tracker_rest_api.model.constants.QueryConstants;
 
-import li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamTeamDTO;
+import li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamViewTeamDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Team;
 import li.zhang.app_stat_tracker_rest_api.persistence.mapper.TeamMapper;
 import li.zhang.app_stat_tracker_rest_api.services.core.TeamService;
@@ -29,8 +29,8 @@ public class TeamController extends AbstractController<Team> {
 
     private final TeamService service;
     private final TeamMapper mapper;
-    private final AbstractAPIResponse<List<TeamTeamDTO>> apiResponseCollection = new AbstractAPIResponse<>();
-    private final AbstractAPIResponse<TeamTeamDTO> apiResponseSingleton = new AbstractAPIResponse<>();
+    private final AbstractAPIResponse<List<TeamViewTeamDTO>> apiResponseCollection = new AbstractAPIResponse<>();
+    private final AbstractAPIResponse<TeamViewTeamDTO> apiResponseSingleton = new AbstractAPIResponse<>();
 
     public TeamController(TeamService service, TeamMapper mapper) {
         this.service = service;
@@ -42,17 +42,17 @@ public class TeamController extends AbstractController<Team> {
     }
 
     @GetMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY })
-    public ResponseEntity<AbstractRestResponse<List<TeamTeamDTO>>> findAllPlayersPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page,
-                                                                                                @RequestParam(value = QueryConstants.SIZE) final int size,
-                                                                                                @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
-                                                                                                @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+    public ResponseEntity<AbstractRestResponse<List<TeamViewTeamDTO>>> findAllPlayersPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page,
+                                                                                                        @RequestParam(value = QueryConstants.SIZE) final int size,
+                                                                                                        @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+                                                                                                        @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         Page<Team> teamResultPage = this.service.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total players : "+teamResultPage.getTotalPages()*teamResultPage.getContent().size());
         return apiResponseCollection.createAPIResponse(mapper.toDTOList(teamResultPage.getContent()) , metaData, RestResponseMessage.TEAMS_GET_SUCCESS, RestParams.API_STATUS_OK);
     }
 
     @GetMapping()
-    public ResponseEntity<AbstractRestResponse<List<TeamTeamDTO>>> findAllPlayers(final HttpServletRequest request) {
+    public ResponseEntity<AbstractRestResponse<List<TeamViewTeamDTO>>> findAllPlayers(final HttpServletRequest request) {
         List<Team> teamsResultList = this.service.findAll();
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: find all TEAM - count : "+teamsResultList.size());
         return apiResponseCollection.createAPIResponse(mapper.toDTOList(teamsResultList) , metaData, RestResponseMessage.TEAMS_GET_SUCCESS, RestParams.API_STATUS_OK);
@@ -60,7 +60,7 @@ public class TeamController extends AbstractController<Team> {
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AbstractRestResponse<TeamTeamDTO>> findOnePlayer(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<TeamViewTeamDTO>> findOnePlayer(@PathVariable("id") final Long id) {
         Team teamResult = service.find(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: find one TEAM - count : 1 ");
         return apiResponseSingleton.createAPIResponse(mapper.toDTO(teamResult) , metaData, RestResponseMessage.TEAM_GET_SUCCESS,RestParams.API_STATUS_OK);
@@ -68,7 +68,7 @@ public class TeamController extends AbstractController<Team> {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<AbstractRestResponse<TeamTeamDTO>> createPlayer(@RequestBody @Valid final TeamTeamDTO dto) {
+    public ResponseEntity<AbstractRestResponse<TeamViewTeamDTO>> createPlayer(@RequestBody @Valid final TeamViewTeamDTO dto) {
         Team teamResult = service.create(mapper.toEntity(dto));
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: create TEAM - count : 1  ");
         return apiResponseSingleton.createAPIResponse(mapper.toDTO(teamResult) , metaData, RestResponseMessage.TEAM_CREATE_SUCCESS,String.valueOf(HttpStatus.CREATED));
@@ -76,7 +76,7 @@ public class TeamController extends AbstractController<Team> {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AbstractRestResponse<TeamTeamDTO>> updatePlayer(@PathVariable("id") final Long id, @RequestBody @Valid TeamTeamDTO dto) {
+    public ResponseEntity<AbstractRestResponse<TeamViewTeamDTO>> updatePlayer(@PathVariable("id") final Long id, @RequestBody @Valid TeamViewTeamDTO dto) {
         Team teamResult = service.update(mapper.toEntity(dto));
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: update TEAM - count : 1  ");
         return apiResponseSingleton.createAPIResponse(mapper.toDTO(teamResult) , metaData, RestResponseMessage.TEAM_UPDATE_SUCCESS, String.valueOf(HttpStatus.OK));
@@ -84,7 +84,7 @@ public class TeamController extends AbstractController<Team> {
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<AbstractRestResponse<TeamTeamDTO>> delete(@PathVariable("id") final Long id) {
+    public ResponseEntity<AbstractRestResponse<TeamViewTeamDTO>> delete(@PathVariable("id") final Long id) {
         this.service.deleteById(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: delete TEAM - count : 1  ");
         return apiResponseSingleton.createAPIResponse(null , metaData, RestResponseMessage.TEAM_DELETE_SUCCESS, String.valueOf(HttpStatus.NO_CONTENT));

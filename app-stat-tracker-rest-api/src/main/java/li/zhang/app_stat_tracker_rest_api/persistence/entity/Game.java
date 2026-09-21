@@ -15,6 +15,7 @@ import java.util.Set;
 public class Game implements BaseEntity {
 
     @Id
+
     private Long id;
 
     @Override
