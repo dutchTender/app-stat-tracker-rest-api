@@ -45,9 +45,9 @@ public class PlayerController extends AbstractController<Player> {
     @GetMapping(params = { QueryConstants.PAGE, QueryConstants.SIZE, QueryConstants.SORT_BY })
     public
     ResponseEntity<AbstractRestResponse<List<PlayerDTO>>> findAllPlayersPaginatedAndSorted(@RequestParam(value = QueryConstants.PAGE) final int page,
-                                                                                     @RequestParam(value = QueryConstants.SIZE) final int size,
-                                                                                     @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
-                                                                                     @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
+                                                                                           @RequestParam(value = QueryConstants.SIZE) final int size,
+                                                                                           @RequestParam(value = QueryConstants.SORT_BY) final String sortBy,
+                                                                                           @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         Page<Player> playersResultPage = this.service.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.PLAYER_ENTITY_PATH, "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total players : "+playersResultPage.getTotalPages()*playersResultPage.getContent().size());
         return apiResponseCollection.createAPIResponse(mapper.toDTOList(playersResultPage.getContent()) , metaData, RestResponseMessage.PLAYERS_GET_SUCCESS, RestParams.API_STATUS_OK);
