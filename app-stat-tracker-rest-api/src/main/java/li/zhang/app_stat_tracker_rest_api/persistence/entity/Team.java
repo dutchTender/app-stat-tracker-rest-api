@@ -54,17 +54,19 @@ public class Team implements BaseEntity {
     private Set<Game> awayGames = new HashSet<>();
 
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Player> players = new HashSet<>();
 
 
     public void addPlayer(Player player){
         this.players.add(player);
+        player.setTeam(this);
     }
 
 
     public void removePlayer(Player player){
         this.players.remove(player);
+        player.setTeam(null);
     }
 
 

@@ -58,6 +58,7 @@ public class Player implements BaseEntity{
     }
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "team_id")
     private Team team;
 
     @OneToMany(mappedBy = "player")

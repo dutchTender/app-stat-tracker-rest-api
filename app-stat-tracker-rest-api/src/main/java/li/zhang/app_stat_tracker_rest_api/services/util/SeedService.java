@@ -6,10 +6,6 @@ import li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Team;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 @Service
 public class SeedService {
 
@@ -57,11 +53,11 @@ public class SeedService {
 
         Team team1 = new Team("Team-Thunder");
         team1.setTeamCoachName("Dutch Tender");
-        team1.addPlayer(player1);
-        team1.addPlayer(player2);
-        team1.addPlayer(player3);
+       // team1.addPlayer(player1);
+       // team1.addPlayer(player2);
+       // team1.addPlayer(player3);
         this.teamDAO.saveAndFlush(team1);
-        /*
+
          player1.setTeam(team1);
         player2.setTeam(team1);
         player3.setTeam(team1);
@@ -69,7 +65,7 @@ public class SeedService {
         this.playerDAO.saveAndFlush(player2);
         this.playerDAO.saveAndFlush(player3);
 
-         */
+
 
     }
 }
