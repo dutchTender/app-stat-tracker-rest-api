@@ -5,3 +5,4 @@ Feature: Player Account Management
     When a client requests registration for "Alice" with email "alice@example.com"
     Then the response status should be 201
     And the player "Alice" should exist in the system
+

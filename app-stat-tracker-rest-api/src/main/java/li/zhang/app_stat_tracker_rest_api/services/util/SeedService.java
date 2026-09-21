@@ -53,21 +53,23 @@ public class SeedService {
 
         this.playerDAO.saveAndFlush(player3);
 
-        Set<Player> players = new HashSet<>();
-        players.add(player1);
-        players.add(player2);
-        players.add(player3);
+
 
         Team team1 = new Team("Team-Thunder");
         team1.setTeamCoachName("Dutch Tender");
-        team1.setPlayers(players);
+        team1.addPlayer(player1);
+        team1.addPlayer(player2);
+        team1.addPlayer(player3);
         this.teamDAO.saveAndFlush(team1);
-        player1.setTeam(team1);
+        /*
+         player1.setTeam(team1);
         player2.setTeam(team1);
         player3.setTeam(team1);
         this.playerDAO.saveAndFlush(player1);
         this.playerDAO.saveAndFlush(player2);
         this.playerDAO.saveAndFlush(player3);
+
+         */
 
     }
 }

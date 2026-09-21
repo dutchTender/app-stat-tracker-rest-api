@@ -7,4 +7,5 @@ public record TeamDTO(Long id,
                       String teamCoachName,
                       String teamSponsors,
                       Set<GameDTO> homeGames,
-                      Set<GameDTO> awayGames) {}
+                      Set<GameDTO> awayGames,
+                      Set<PlayerDTO> players) {}

@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseEntity;
+import li.zhang.app_stat_tracker_rest_api.persistence.dto.GameDTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -46,14 +48,39 @@ public class Team implements BaseEntity {
     public String teamSponsors;
 
     @OneToMany(mappedBy = "homeTeam")
-    private Set<Game> homeGames;
+    private Set<Game> homeGames = new HashSet<>();
 
     @OneToMany(mappedBy = "awayTeam")
-    private Set<Game> awayGames;
+    private Set<Game> awayGames = new HashSet<>();
 
 
     @OneToMany(mappedBy = "team")
-    private Set<Player> players;
+    private Set<Player> players = new HashSet<>();
+
+
+    public void addPlayer(Player player){
+        this.players.add(player);
+    }
+
+
+    public void removePlayer(Player player){
+        this.players.remove(player);
+    }
+
+
+    public void addHomeGame(Game game){
+        this.homeGames.add(game);
+    }
+    public void removeHomeGame(Game game){
+        this.homeGames.remove(game);
+    }
+
+    public void addAwayGame(Game game){
+        this.awayGames.add(game);
+    }
+    public void removeAwayGame(Game game){
+        this.awayGames.remove(game);
+    }
 
     @Override
     public boolean equals(Object o) {
