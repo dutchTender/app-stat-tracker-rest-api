@@ -23,14 +23,10 @@ class PlayerDAOTest {
 
     @Test
     void saveAndFindById_ShouldReturnProduct() {
-        // Arrange (Given)
-        Player entity = new Player("lizhang");
 
-        // Act (When)
+        Player entity = new Player("lizhang");
         Player savedEntity = repository.save(entity);
         Optional<Player> foundProduct = repository.findById(savedEntity.getId());
-
-        // Assert (Then)
         assertThat(foundProduct).isPresent();
         assertThat(foundProduct.get().getUserName()).isEqualTo("lizhang");
 
@@ -38,15 +34,11 @@ class PlayerDAOTest {
 
     @Test
     void findByCategory_ShouldReturnMatchingProducts() {
-        // Arrange (Given)
+
         repository.save(new Player("LL2345654"));
         repository.save(new Player("mentor4578"));
         repository.save(new Player("JayKilla567"));
-
-        // Act (When)
         List<Player> playerList = repository.findAll();
-
-        // Assert (Then)
         assertThat(playerList).hasSize(3);
 
     }

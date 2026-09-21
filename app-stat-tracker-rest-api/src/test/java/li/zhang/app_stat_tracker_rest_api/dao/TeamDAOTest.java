@@ -25,14 +25,10 @@ class TeamDAOTest {
 
     @Test
     void saveAndFindById_ShouldReturnProduct() {
-        // Arrange (Given)
-        Team entity = new Team("rockets");
 
-        // Act (When)
+        Team entity = new Team("rockets");
         Team savedEntity = repository.save(entity);
         Optional<Team> foundProduct = repository.findById(savedEntity.getId());
-
-        // Assert (Then)
         assertThat(foundProduct).isPresent();
         assertThat(foundProduct.get().getTeamName()).isEqualTo("rockets");
 
@@ -40,15 +36,13 @@ class TeamDAOTest {
 
     @Test
     void findByCategory_ShouldReturnMatchingProducts() {
-        // Arrange (Given)
+
         repository.save(new Team("bulls"));
         repository.save(new Team("sharks"));
         repository.save(new Team("warriors"));
 
-        // Act (When)
-        List<Team> teamList = repository.findAll();
 
-        // Assert (Then)
+        List<Team> teamList = repository.findAll();
         assertThat(teamList).hasSize(3);
 
     }
