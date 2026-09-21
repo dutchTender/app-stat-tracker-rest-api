@@ -13,14 +13,12 @@ import li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamTeamDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Team;
 import li.zhang.app_stat_tracker_rest_api.persistence.mapper.TeamMapper;
 import li.zhang.app_stat_tracker_rest_api.services.core.TeamService;
-import li.zhang.app_stat_tracker_rest_api.utils.config.MapperAvoidCycleContext;
 import li.zhang.app_stat_tracker_rest_api.utils.constants.RestParams;
 import li.zhang.app_stat_tracker_rest_api.utils.constants.RestResponseMessage;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -50,14 +48,14 @@ public class TeamController extends AbstractController<Team> {
                                                                                                 @RequestParam(value = QueryConstants.SORT_ORDER) final String sortOrder) {
         Page<Team> teamResultPage = this.service.findAllPaginatedAndSorted(page, size, sortBy, sortOrder);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: sort by - {" +sortBy+" }" + " sort order - { "+sortOrder+" }  page - {"+page+"}  size - {"+size+"} total players : "+teamResultPage.getTotalPages()*teamResultPage.getContent().size());
-        return apiResponseCollection.createAPIResponse(mapper.toDTOList(teamResultPage.getContent(), new MapperAvoidCycleContext()) , metaData, RestResponseMessage.TEAMS_GET_SUCCESS, RestParams.API_STATUS_OK);
+        return apiResponseCollection.createAPIResponse(mapper.toDTOList(teamResultPage.getContent()) , metaData, RestResponseMessage.TEAMS_GET_SUCCESS, RestParams.API_STATUS_OK);
     }
 
     @GetMapping()
     public ResponseEntity<AbstractRestResponse<List<TeamTeamDTO>>> findAllPlayers(final HttpServletRequest request) {
         List<Team> teamsResultList = this.service.findAll();
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: find all TEAM - count : "+teamsResultList.size());
-        return apiResponseCollection.createAPIResponse(mapper.toDTOList(teamsResultList, new MapperAvoidCycleContext()) , metaData, RestResponseMessage.TEAMS_GET_SUCCESS, RestParams.API_STATUS_OK);
+        return apiResponseCollection.createAPIResponse(mapper.toDTOList(teamsResultList) , metaData, RestResponseMessage.TEAMS_GET_SUCCESS, RestParams.API_STATUS_OK);
     }
 
 
@@ -65,23 +63,23 @@ public class TeamController extends AbstractController<Team> {
     public ResponseEntity<AbstractRestResponse<TeamTeamDTO>> findOnePlayer(@PathVariable("id") final Long id) {
         Team teamResult = service.find(id);
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: find one TEAM - count : 1 ");
-        return apiResponseSingleton.createAPIResponse(mapper.toDTO(teamResult, new MapperAvoidCycleContext()) , metaData, RestResponseMessage.TEAM_GET_SUCCESS,RestParams.API_STATUS_OK);
+        return apiResponseSingleton.createAPIResponse(mapper.toDTO(teamResult) , metaData, RestResponseMessage.TEAM_GET_SUCCESS,RestParams.API_STATUS_OK);
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<AbstractRestResponse<TeamTeamDTO>> createPlayer(@RequestBody @Valid final TeamTeamDTO dto) {
-        Team teamResult = service.create(mapper.toEntity(dto, new MapperAvoidCycleContext()));
+        Team teamResult = service.create(mapper.toEntity(dto));
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: create TEAM - count : 1  ");
-        return apiResponseSingleton.createAPIResponse(mapper.toDTO(teamResult, new MapperAvoidCycleContext()) , metaData, RestResponseMessage.TEAM_CREATE_SUCCESS,String.valueOf(HttpStatus.CREATED));
+        return apiResponseSingleton.createAPIResponse(mapper.toDTO(teamResult) , metaData, RestResponseMessage.TEAM_CREATE_SUCCESS,String.valueOf(HttpStatus.CREATED));
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AbstractRestResponse<TeamTeamDTO>> updatePlayer(@PathVariable("id") final Long id, @RequestBody @Valid TeamTeamDTO dto) {
-        Team teamResult = service.update(mapper.toEntity(dto, new MapperAvoidCycleContext()));
+        Team teamResult = service.update(mapper.toEntity(dto));
         AbstractRestMetaData metaData = new AbstractRestMetaData(RestParams.API_BASE_URL+RestParams.TEAM_ENTITY_PATH, "params: update TEAM - count : 1  ");
-        return apiResponseSingleton.createAPIResponse(mapper.toDTO(teamResult, new MapperAvoidCycleContext()) , metaData, RestResponseMessage.TEAM_UPDATE_SUCCESS, String.valueOf(HttpStatus.OK));
+        return apiResponseSingleton.createAPIResponse(mapper.toDTO(teamResult) , metaData, RestResponseMessage.TEAM_UPDATE_SUCCESS, String.valueOf(HttpStatus.OK));
     }
 
     @DeleteMapping(value = "/{id}")
