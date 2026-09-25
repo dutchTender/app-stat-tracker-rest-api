@@ -27,12 +27,12 @@ public class TeamService implements BaseService<Team> {
 
     @Override
     public Team find(Long id) {
-        return teamRepository.findTeamById(id).isPresent() ? teamRepository.findTeamById(id).get() : null;
+        return teamRepository.findTeamById(id).orElse(null);
     }
 
     @Override
     public Team findByExample(Example<Team> example) {
-        return  teamRepository.findTeamBy(example).isPresent() ? teamRepository.findTeamBy(example).get() : null;
+        return  teamRepository.findTeamBy(example).orElse(null);
     }
 
     @Override

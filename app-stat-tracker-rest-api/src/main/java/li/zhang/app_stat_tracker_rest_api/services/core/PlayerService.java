@@ -27,12 +27,12 @@ public class PlayerService implements BaseService<Player> {
 
     @Override
     public Player find(Long id) {
-        return this.playerDAO.findPlayerById(id).isPresent() ? this.playerDAO.findPlayerById(id).get() : null;
+        return this.playerDAO.findPlayerById(id).orElse(null);
     }
 
     @Override
     public Player findByExample(Example<Player> example) {
-       return this.playerDAO.findPlayerBy(example).isPresent() ? this.playerDAO.findPlayerBy(example).get() : null;
+       return this.playerDAO.findPlayerBy(example).orElse(null);
     }
 
     @Override
