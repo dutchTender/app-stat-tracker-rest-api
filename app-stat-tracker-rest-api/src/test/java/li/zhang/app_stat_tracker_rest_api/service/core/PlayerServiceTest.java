@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 import li.zhang.app_stat_tracker_rest_api.persistence.dao.PlayerDAO;
+import li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
 import li.zhang.app_stat_tracker_rest_api.services.core.PlayerService;
 
@@ -30,8 +31,10 @@ class PlayerServiceTest {
         Long entityId = 1L;
         Player mockEntity = new Player("Alice");
         mockEntity.setId(entityId);
-        when(repository.findPlayerById(entityId)).thenReturn(Optional.of(mockEntity));
-        Player result = service.find(entityId);
+        PlayerDTO playerDTO = new PlayerDTO();
+        playerDTO.setUserName("Alice");
+        when(repository.findPlayerById(entityId)).thenReturn(Optional.of(playerDTO));
+        PlayerDTO result = service.find(entityId);
         assertNotNull(result);
         assertEquals("Alice", result.getUserName());
 

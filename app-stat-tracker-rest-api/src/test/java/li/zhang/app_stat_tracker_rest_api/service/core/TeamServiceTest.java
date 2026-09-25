@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 import li.zhang.app_stat_tracker_rest_api.persistence.dao.TeamDAO;
+import li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Team;
 
 import li.zhang.app_stat_tracker_rest_api.services.core.TeamService;
@@ -31,8 +32,10 @@ class TeamServiceTest {
         Long entityId = 1L;
         Team mockEntity = new Team("Alice");
         mockEntity.setId(entityId);
-        when(repository.findTeamById(entityId)).thenReturn(Optional.of(mockEntity));
-        Team result = service.find(entityId);
+        TeamDTO teamDTO = new TeamDTO();
+        teamDTO.setTeamName("Alice");
+        when(repository.findTeamById(entityId)).thenReturn(Optional.of(teamDTO));
+        TeamDTO result = service.find(entityId);
         assertNotNull(result);
         assertEquals("Alice", result.getTeamName());
         verify(repository, times(2)).findTeamById(entityId);

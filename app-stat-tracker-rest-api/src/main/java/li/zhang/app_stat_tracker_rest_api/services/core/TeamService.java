@@ -2,6 +2,7 @@ package li.zhang.app_stat_tracker_rest_api.services.core;
 
 import li.zhang.app_stat_tracker_rest_api.model.base.BaseService;
 import li.zhang.app_stat_tracker_rest_api.persistence.dao.TeamDAO;
+import li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Team;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.util.logging.Logger;
 
 
 @Service
-public class TeamService implements BaseService<Team> {
+public class TeamService implements BaseService<Team, TeamDTO> {
 
     private final TeamDAO teamRepository;
     private static final Logger logger = Logger.getLogger(TeamService.class.getName());
@@ -26,32 +27,32 @@ public class TeamService implements BaseService<Team> {
     }
 
     @Override
-    public Team find(Long id) {
+    public TeamDTO find(Long id) {
         return teamRepository.findTeamById(id).orElse(null);
     }
 
     @Override
-    public Team findByExample(Example<Team> example) {
+    public TeamDTO findByExample(Example<Team> example) {
         return  teamRepository.findTeamBy(example).orElse(null);
     }
 
     @Override
-    public List<Team> findAll() {
-        return teamRepository.findAll();
+    public List<TeamDTO> findAll() {
+        return teamRepository.findAllBy();
     }
 
     @Override
-    public List<Team> findAllByExample(Example<Team> example) {
-        return teamRepository.findAll(example);
+    public List<TeamDTO> findAllByExample(Example<Team> example) {
+        return teamRepository.findAllBy(example);
     }
 
     @Override
-    public Page<Team> findAllPaginatedAndSorted(int page, int size, String sortBy, String sortOrder) {
+    public Page<TeamDTO> findAllPaginatedAndSorted(int page, int size, String sortBy, String sortOrder) {
         Sort.Direction direction = Sort.Direction.fromString(sortOrder);
         Sort sort = Sort.by(direction, sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         this.getLogger().log(Level.INFO, "findAllPaginatedAndSorted() params : - {}", pageable);
-        return teamRepository.findAll(pageable);
+        return teamRepository.findAllBy(pageable);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Service
-public class GameService implements BaseService<Game> {
+public class GameService implements BaseService<Game, GameDTO> {
 
     private final GameDAO gameDAO;
 
@@ -29,27 +29,27 @@ public class GameService implements BaseService<Game> {
     }
 
     @Override
-    public Game find(Long id) {
+    public GameDTO find(Long id) {
         return this.gameDAO.findGameById(id).orElse(null);
     }
 
     @Override
-    public Game findByExample(Example<Game> example) {
+    public GameDTO findByExample(Example<Game> example) {
         return null;
     }
 
     @Override
-    public List<Game> findAll() {
+    public List<GameDTO> findAll() {
         return List.of();
     }
 
     @Override
-    public List<Game> findAllByExample(Example<Game> example) {
+    public List<GameDTO> findAllByExample(Example<Game> example) {
         return List.of();
     }
 
     @Override
-    public Page<Game> findAllPaginatedAndSorted(int page, int size, String sortBy, String sortOrder) {
+    public Page<GameDTO> findAllPaginatedAndSorted(int page, int size, String sortBy, String sortOrder) {
         return null;
     }
 

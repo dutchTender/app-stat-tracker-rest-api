@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import li.zhang.app_stat_tracker_rest_api.persistence.dao.PlayerDAO;
+import li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class PlayerEntityStepDefinitions {
 
     @Then("a player named {string} should exist in the database")
     public void aCustomerNamedShouldExistInTheDatabase(String name) {
-        Optional<Player> customer = playerRepository.findPlayerByUserName(name);
+        Optional<PlayerDTO> customer = playerRepository.findPlayerByUserName(name);
         assertTrue(customer.isPresent(), "Customer should be found in the database");
         log.info("cucumber tests completed");
     }

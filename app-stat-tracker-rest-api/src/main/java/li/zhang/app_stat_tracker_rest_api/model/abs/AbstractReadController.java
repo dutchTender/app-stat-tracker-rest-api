@@ -7,27 +7,27 @@ import org.springframework.data.domain.Example;
 import java.util.List;
 
 
-public abstract class AbstractReadController<T extends BaseEntity> {
+public abstract class AbstractReadController<T extends BaseEntity, K> {
     
-    protected final T findOneEntity(final Long id) {
+    protected final K findOneEntity(final Long id) {
         return getService().find(id);
     }
 
-    protected final T findOneEntityByExample(Example<T> example) {
+    protected final K findOneEntityByExample(Example<T> example) {
         return getService().findByExample(example);
     }
 
-    protected final List<T> findAllEntities() {
+    protected final List<K> findAllEntities() {
 
         return getService().findAll();
     }
 
-    protected final List<T> findAlEntitiesByExample(Example<T> example) {
+    protected final List<K> findAlEntitiesByExample(Example<T> example) {
 
         return getService().findAllByExample(example);
     }
     protected final long countEntities() {
         return getService().count();
     }
-    protected abstract BaseService<T> getService();
+    protected abstract BaseService<T,K> getService();
 }

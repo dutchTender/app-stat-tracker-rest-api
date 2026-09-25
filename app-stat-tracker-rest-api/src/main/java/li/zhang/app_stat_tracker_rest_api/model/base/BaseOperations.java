@@ -5,17 +5,17 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface BaseOperations <T extends BaseEntity> {
+public interface BaseOperations <T extends BaseEntity, K> {
 
-    T find(final Long id);
+    K find(final Long id);
 
-    T findByExample(final Example<T> example);
+    K findByExample(final Example<T> example);
 
-    List<T> findAll();
+    List<K> findAll();
 
-    List<T> findAllByExample(final Example<T> example);
+    List<K> findAllByExample(final Example<T> example);
 
-    Page<T> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder);
+    Page<K> findAllPaginatedAndSorted(final int page, final int size, final String sortBy, final String sortOrder);
 
     T create(final T entity);
 

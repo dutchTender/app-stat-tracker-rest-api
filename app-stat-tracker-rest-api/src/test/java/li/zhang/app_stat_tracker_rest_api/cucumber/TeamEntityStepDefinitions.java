@@ -4,6 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import li.zhang.app_stat_tracker_rest_api.persistence.dao.TeamDAO;
+import li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Team;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class TeamEntityStepDefinitions {
 
     @Then("a team named {string} should exist in the database")
     public void aCustomerNamedShouldExistInTheDatabase(String name) {
-        Optional<Team> team = repository.findTeamByTeamName(name);
+        Optional<TeamDTO> team = repository.findTeamByTeamName(name);
         assertTrue(team.isPresent(), "Customer should be found in the database");
         log.info("cucumber tests completed");
     }
