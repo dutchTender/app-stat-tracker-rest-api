@@ -29,7 +29,8 @@ public class PlayerEntityStepDefinitions {
 
     @When("a user saves a new player named {string}")
     public void aUserSavesANewCustomerNamed(String name) {
-        playerRepository.save(new Player(name));
+
+        playerRepository.saveAndFlush(new Player(name));
     }
 
     @Then("a player named {string} should exist in the database")

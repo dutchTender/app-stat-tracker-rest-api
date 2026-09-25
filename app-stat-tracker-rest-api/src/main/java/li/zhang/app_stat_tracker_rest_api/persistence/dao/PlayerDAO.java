@@ -20,7 +20,7 @@ public interface PlayerDAO extends JpaRepository<Player, Long> , QueryByExampleE
             "  new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" + // Nested constructor
             ") " +
             "FROM Player p " +
-            "JOIN p.team t " + // Explicit JOIN to fetch team data efficiently
+            "left JOIN p.team t " + // Explicit JOIN to fetch team data efficiently
             "WHERE p.id = :id")
     Optional<PlayerDTO> findPlayerById(@Param("id") Long id);
 
@@ -28,7 +28,7 @@ public interface PlayerDAO extends JpaRepository<Player, Long> , QueryByExampleE
             "  new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" + // Nested constructor
             ") " +
             "FROM Player p " +
-            "JOIN p.team t " + // Explicit JOIN to fetch team data efficiently
+            "left JOIN p.team t " + // Explicit JOIN to fetch team data efficiently
             "WHERE p.userName = :name")
     Optional<PlayerDTO> findPlayerByUserName(@Param("name") String name);
 
