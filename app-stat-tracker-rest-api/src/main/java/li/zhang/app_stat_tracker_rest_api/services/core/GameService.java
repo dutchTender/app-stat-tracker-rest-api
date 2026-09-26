@@ -5,11 +5,11 @@ import li.zhang.app_stat_tracker_rest_api.persistence.dao.GameDAO;
 
 import li.zhang.app_stat_tracker_rest_api.persistence.dto.GameDTO;
 import li.zhang.app_stat_tracker_rest_api.persistence.entity.Game;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
@@ -35,22 +35,26 @@ public class GameService implements BaseService<Game, GameDTO> {
 
     @Override
     public Game findByExample(Example<Game> example) {
-        return null;
+        return this.gameDAO.findGameBy(example).orElse(null);
     }
 
     @Override
     public List<GameDTO> findAll() {
-        return List.of();
+        return this.gameDAO.findAllBy();
     }
 
     @Override
     public List<Game> findAllByExample(Example<Game> example) {
-        return List.of();
+        return this.gameDAO.findAllBy(example);
     }
 
     @Override
     public Page<GameDTO> findAllPaginatedAndSorted(int page, int size, String sortBy, String sortOrder) {
-        return null;
+        Sort.Direction direction = Sort.Direction.fromString(sortOrder);
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        this.getLogger().log(Level.INFO, "findAllPaginatedAndSorted() params : - {}", pageable);
+        return this.gameDAO.findAllBy(pageable);
     }
 
     @Override
@@ -81,6 +85,6 @@ public class GameService implements BaseService<Game, GameDTO> {
 
     @Override
     public long count() {
-        return 0;
+        return this.gameDAO.count();
     }
 }
