@@ -15,21 +15,31 @@ import java.util.Optional;
 
 public interface TeamDAO extends JpaRepository<Team, Long>, QueryByExampleExecutor<Team> {
 
-    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" +
+    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors," +
+                  "new li.zhang.app_stat_tracker_rest_api.persistence.dto.GameDTO(g.id, g.gameTime,g.gameTime, g.gameLocation))" +
             "FROM Team t " +
+            "left JOIN t.homeGames g " +
             "WHERE t.id = :id")
     Optional<TeamDTO> findTeamById(@Param("id") Long id);
 
-    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" +
+    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors," +
+            "new li.zhang.app_stat_tracker_rest_api.persistence.dto.GameDTO(g.id, g.gameTime,g.gameTime, g.gameLocation))" +
             "FROM Team t " +
+            "left JOIN t.homeGames g " +
             "WHERE t.teamName = :teamName")
     Optional<TeamDTO> findTeamByTeamName(@Param("teamName") String teamName);
 
-    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" +
-            "FROM Team t " )
+    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors," +
+            "new li.zhang.app_stat_tracker_rest_api.persistence.dto.GameDTO(g.id, g.gameTime,g.gameTime, g.gameLocation))" +
+            "FROM Team t " +
+            "left JOIN t.homeGames g ")
     List<TeamDTO> findAllBy();
-    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" +
-            "FROM Team t " )
+
+
+    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors," +
+            "new li.zhang.app_stat_tracker_rest_api.persistence.dto.GameDTO(g.id, g.gameTime,g.gameTime, g.gameLocation))" +
+            "FROM Team t " +
+            "left JOIN t.homeGames g ")
     Page<TeamDTO> findAllBy(Pageable pageable);
 
     Optional<Team> findTeamBy(Example<Team> example);
