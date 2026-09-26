@@ -15,8 +15,13 @@ import java.util.Set;
 public class Game implements BaseEntity {
 
     @Id
-
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    public Game() {
+
+    }
 
     @Override
     public Long getId() {
@@ -31,6 +36,9 @@ public class Game implements BaseEntity {
     public String gameTime;
     public String gameLocation;
 
+    public Game(String gameTime) {
+        this.gameTime = gameTime;
+    }
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
     public Team homeTeam;
