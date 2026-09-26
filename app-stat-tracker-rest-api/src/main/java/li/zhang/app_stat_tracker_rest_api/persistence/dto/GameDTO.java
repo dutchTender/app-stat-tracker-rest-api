@@ -6,7 +6,7 @@ public record GameDTO(Long id,
                       String gameType,
                       String gameTime,
                       String gameLocation,
-                      TeamViewTeamDTO homeTeam,
-                      TeamViewTeamDTO awayTeam,
+                      TeamDTO homeTeam,
+                      TeamDTO awayTeam,
                       Set<PlayerStatsDTO> playerStats
                       ) {}

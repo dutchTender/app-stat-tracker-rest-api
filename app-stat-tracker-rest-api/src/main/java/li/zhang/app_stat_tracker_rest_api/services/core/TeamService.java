@@ -32,7 +32,7 @@ public class TeamService implements BaseService<Team, TeamDTO> {
     }
 
     @Override
-    public TeamDTO findByExample(Example<Team> example) {
+    public Team findByExample(Example<Team> example) {
         return  teamRepository.findTeamBy(example).orElse(null);
     }
 
@@ -42,7 +42,7 @@ public class TeamService implements BaseService<Team, TeamDTO> {
     }
 
     @Override
-    public List<TeamDTO> findAllByExample(Example<Team> example) {
+    public List<Team> findAllByExample(Example<Team> example) {
         return teamRepository.findAllBy(example);
     }
 

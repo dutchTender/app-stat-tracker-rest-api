@@ -17,24 +17,31 @@ import java.util.Optional;
 public interface PlayerDAO extends JpaRepository<Player, Long> , QueryByExampleExecutor<Player> {
 
     @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerDTO( p.id, p.userName, p.firstName, p.lastName,p.email, p.phone, p.sex, " +
-            "  new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" + // Nested constructor
-            ") " +
+            "  new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" + ") " +
             "FROM Player p " +
             "left JOIN p.team t " + // Explicit JOIN to fetch team data efficiently
             "WHERE p.id = :id")
     Optional<PlayerDTO> findPlayerById(@Param("id") Long id);
 
     @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerDTO( p.id, p.userName, p.firstName, p.lastName,p.email, p.phone, p.sex, " +
-            "  new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" + // Nested constructor
-            ") " +
+            "  new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" + ") " +
             "FROM Player p " +
             "left JOIN p.team t " + // Explicit JOIN to fetch team data efficiently
             "WHERE p.userName = :name")
     Optional<PlayerDTO> findPlayerByUserName(@Param("name") String name);
 
-
-    Optional<PlayerDTO> findPlayerBy(Example<Player> example);
+    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerDTO( p.id, p.userName, p.firstName, p.lastName,p.email, p.phone, p.sex, " +
+            "  new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" + ") " +
+            "FROM Player p " +
+            "left JOIN p.team t ")
     List<PlayerDTO> findAllBy();
-    List<PlayerDTO> findAllBy(Example<Player> example);
+
+    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.PlayerDTO( p.id, p.userName, p.firstName, p.lastName,p.email, p.phone, p.sex, " +
+            "  new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" + ") " +
+            "FROM Player p " +
+            "left JOIN p.team t ")
     Page<PlayerDTO> findAllBy(Pageable pageable);
+
+    List<Player> findAllPlayerBy(Example<Player> example);
+    Optional<Player> findPlayerBy(Example<Player> example);
 }

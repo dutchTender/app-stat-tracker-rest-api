@@ -6,17 +6,32 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface TeamDAO extends JpaRepository<Team, Long>, QueryByExampleExecutor<Team> {
-    Optional<TeamDTO> findTeamById(Long id);
-    Optional<TeamDTO> findTeamByTeamName(String teamName);
-    Optional<TeamDTO> findTeamBy(Example<Team> example);
 
+    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" +
+            "FROM Team t " +
+            "WHERE t.id = :id")
+    Optional<TeamDTO> findTeamById(@Param("id") Long id);
+
+    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" +
+            "FROM Team t " +
+            "WHERE t.teamName = :teamName")
+    Optional<TeamDTO> findTeamByTeamName(@Param("teamName") String teamName);
+
+    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" +
+            "FROM Team t " )
     List<TeamDTO> findAllBy();
-    List<TeamDTO> findAllBy(Example<Team> example);
+    @Query("SELECT new li.zhang.app_stat_tracker_rest_api.persistence.dto.TeamDTO(t.id, t.teamName,t.teamCoachName, t.teamSponsors)" +
+            "FROM Team t " )
     Page<TeamDTO> findAllBy(Pageable pageable);
+
+    Optional<Team> findTeamBy(Example<Team> example);
+    List<Team> findAllBy(Example<Team> example);
 }

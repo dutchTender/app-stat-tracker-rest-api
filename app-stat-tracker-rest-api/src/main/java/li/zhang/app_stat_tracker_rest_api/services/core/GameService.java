@@ -34,7 +34,7 @@ public class GameService implements BaseService<Game, GameDTO> {
     }
 
     @Override
-    public GameDTO findByExample(Example<Game> example) {
+    public Game findByExample(Example<Game> example) {
         return null;
     }
 
@@ -44,7 +44,7 @@ public class GameService implements BaseService<Game, GameDTO> {
     }
 
     @Override
-    public List<GameDTO> findAllByExample(Example<Game> example) {
+    public List<Game> findAllByExample(Example<Game> example) {
         return List.of();
     }
 

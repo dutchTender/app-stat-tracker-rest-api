@@ -32,7 +32,7 @@ public class PlayerService implements BaseService<Player, PlayerDTO> {
     }
 
     @Override
-    public PlayerDTO findByExample(Example<Player> example) {
+    public Player findByExample(Example<Player> example) {
        return this.playerDAO.findPlayerBy(example).orElse(null);
     }
 
@@ -42,8 +42,8 @@ public class PlayerService implements BaseService<Player, PlayerDTO> {
     }
 
     @Override
-    public List<PlayerDTO> findAllByExample(Example<Player> example) {
-        return this.playerDAO.findAllBy(example);
+    public List<Player> findAllByExample(Example<Player> example) {
+        return this.playerDAO.findAllPlayerBy(example);
     }
 
     @Override

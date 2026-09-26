@@ -13,7 +13,7 @@ public abstract class AbstractReadController<T extends BaseEntity, K> {
         return getService().find(id);
     }
 
-    protected final K findOneEntityByExample(Example<T> example) {
+    protected final T findOneEntityByExample(Example<T> example) {
         return getService().findByExample(example);
     }
 
@@ -22,7 +22,7 @@ public abstract class AbstractReadController<T extends BaseEntity, K> {
         return getService().findAll();
     }
 
-    protected final List<K> findAlEntitiesByExample(Example<T> example) {
+    protected final List<T> findAlEntitiesByExample(Example<T> example) {
 
         return getService().findAllByExample(example);
     }
